@@ -25,6 +25,7 @@ public class GameBoard{
 
 		while(scoreA<5&&scoreB<5){
 			while(scoreA<5){
+				flag=0;
 				System.out.println("Enter Hero to move for A : ");
 				input = in.nextLine();
 				cor = searchHero(input,'A');
@@ -40,21 +41,38 @@ public class GameBoard{
 					ch = input.charAt(0);
 					switch(ch){
 						case 'F':{
-
+							moveFowardA(cor,H);
+							flag=1;
 							break;
 						}
+						case 'B':{
+							moveBackA(cor,H);
+							flag=1;
+							break;
+						}
+						case 'L':{
+							moveLeftA(cor,H);
+							flag=1;
+							break;
+						}
+						case 'R':{
+							moveRightA(cor,H);
+							flag=1;
+							break;
+						}
+						default:{
+							System.out.println("Wrong move!");
+						}
 					}
-					//Collision
-
-					//Out of Board
-					//hit and update
 				}
 			}
-			
-		}
 
+			
 		
 
+
+
+		}
 	}
 
 
@@ -92,12 +110,14 @@ public class GameBoard{
         displayBoard();
 	}
 	public static void displayBoard(){
+		System.out.println();
 		for (i=0;i<5;i++) {
 			for (j=0;j<5;j++) {
 				System.out.print(board[i][j]+"\t");
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 	public static void displayScore(){
 		System.out.println("\nScore of A : "+scoreA+"\nScore of B : "+scoreB);
@@ -136,5 +156,130 @@ public class GameBoard{
 			}
 		}
 		return A[0];
+	}
+
+	public static void moveFowardA(Coordinate cor,Hero H){
+		if(board[cor.x-H.getStep()][cor.y].compareTo("-")==0){
+			board[cor.x-H.getStep()][cor.y] = "A-"+H.name;
+			board[cor.x][cor.y] = "-";
+			H.coordinate.x-=H.getStep();
+			System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+				",y:"+(cor.y+1));
+			displayBoard();
+		}
+		else{
+			if(board[cor.x-H.getStep()][cor.y].charAt(0)==H.player){
+				System.out.println("Error : Own Hero found!");
+			}
+			else{
+				if(H.getStep()==1){
+					Coordinate deadCor = cor;
+					deadCor.x--;
+					Hero dead = getHero(deadCor,'B');
+					System.out.println(dead.name+" died!");
+					dead.status = false;
+					scoreA++;
+					board[cor.x][cor.y] = "A-"+H.name;
+					board[cor.x+1][cor.y] = "-";
+					H.coordinate.x-=H.getStep();
+					System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+						",y:"+(cor.y+1));
+					displayBoard();
+				}
+			}
+		}
+	}
+	public static void moveBackA(Coordinate cor,Hero H){
+		if(board[cor.x+H.getStep()][cor.y].compareTo("-")==0){
+			board[cor.x+H.getStep()][cor.y] = "A-"+H.name;
+			board[cor.x][cor.y] = "-";
+			H.coordinate.x+=H.getStep();
+			System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+				",y:"+(cor.y+1));
+			displayBoard();
+		}
+		else{
+			if(board[cor.x+H.getStep()][cor.y].charAt(0)==H.player){
+				System.out.println("Error : Own Hero found!");
+			}
+			else{
+				if(H.getStep()==1){
+					Coordinate deadCor = cor;
+					deadCor.x++;
+					Hero dead = getHero(deadCor,'B');
+					System.out.println(dead.name+" died!");
+					dead.status = false;
+					scoreA++;
+					board[cor.x][cor.y] = "A-"+H.name;
+					board[cor.x-1][cor.y] = "-";
+					H.coordinate.x+=H.getStep();
+					System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+						",y:"+(cor.y+1));
+					displayBoard();
+				}
+			}
+		}
+	}
+	public static void moveRightA(Coordinate cor,Hero H){
+		if(board[cor.x][cor.y+H.getStep()].compareTo("-")==0){
+			board[cor.x][cor.y+H.getStep()] = "A-"+H.name;
+			board[cor.x][cor.y] = "-";
+			H.coordinate.y+=H.getStep();
+			System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+				",y:"+(cor.y+1));
+			displayBoard();
+		}
+		else{
+			if(board[cor.x][cor.y+H.getStep()].charAt(0)==H.player){
+				System.out.println("Error : Own Hero found!");
+			}
+			else{
+				if(H.getStep()==1){
+					Coordinate deadCor = cor;
+					deadCor.y++;
+					Hero dead = getHero(deadCor,'B');
+					System.out.println(dead.name+" died!");
+					dead.status = false;
+					scoreA++;
+					board[cor.x][cor.y] = "A-"+H.name;
+					board[cor.x][cor.y-1] = "-";
+					H.coordinate.y+=H.getStep();
+					System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+						",y:"+(cor.y+1));
+					displayBoard();
+				}
+			}
+		}
+	}
+	public static void moveLeftA(Coordinate cor,Hero H){
+		if(board[cor.x][cor.y-H.getStep()].compareTo("-")==0){
+			board[cor.x][cor.y-H.getStep()] = "A-"+H.name;
+			board[cor.x][cor.y] = "-";
+			H.coordinate.y-=H.getStep();
+			System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+				",y:"+(cor.y+1));
+			displayBoard();
+		}
+		else{
+			if(board[cor.x][cor.y-H.getStep()].charAt(0)==H.player){
+				System.out.println("Error : Own Hero found!");
+			}
+			else{
+				if(H.getStep()==1){
+					Coordinate deadCor = cor;
+					deadCor.y--;
+					Hero dead = getHero(deadCor,'B');
+					System.out.println(dead.name+" died!");
+					dead.status = false;
+					scoreA++;
+					board[cor.x][cor.y] = "A-"+H.name;
+					board[cor.x][cor.y+1] = "-";
+					H.coordinate.y-=H.getStep();
+					System.out.println("\nNow,"+H.getType()+" is at"+" x:"+(cor.x+1)+
+						",y:"+(cor.y+1));
+					displayBoard();
+				}
+			}
+		}
 	}
 }
