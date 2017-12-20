@@ -2,42 +2,84 @@ public abstract class Hero{
 	String name;
 	char player;
 	Coordinate coordinate = new Coordinate();
-	Coordinate newCoordinate = new Coordinate();
+	Coordinate newCoordinate = new Coordinate(coordinate);
 	boolean life;
 
 	public Hero(String Name,char Player,Coordinate Coordinate,boolean Life){
 		name = Name;
 		player = Player;
 		coordinate = Coordinate;
-		newCoordinate = Coordinate;
 		life = Life;
 	}
 
-	public abstract void move(char moveDirection,char user);
-
-	public void Forward(char user){
-		switch(user){
-			case 'A':{
-				newCoordinate.x = coordinate.x-1;
+	public void move(char user, char moveDirection){
+		switch(moveDirection){
+			case 'F':{
+				Forward(user);
+				break;
+			}
+			case 'L':{
+				Left(user);
 				break;
 			}
 			case 'B':{
-				newCoordinate.x = coordinate.x+1;
+				Backward(user);
+				break;
+			}
+			case 'R':{
+				Right(user);
 				break;
 			}
 		}
 	}
-
+	public void Forward(char user){
+		switch(user){
+			case 'A':{
+				newCoordinate.x = coordinate.x-hero.step;
+				break;
+			}
+			case 'B':{
+				newCoordinate.x = coordinate.x+hero.step;
+				break;
+			}
+		}
+	}
 	public void Backward(char user){
-		
+		switch(user){
+			case 'A':{
+				newCoordinate.x = coordinate.x+hero.step;
+				break;
+			}
+			case 'B':{
+				newCoordinate.x = coordinate.x-hero.step;
+				break;
+			}
+		}
 	}
-
 	public void Left(char user){
+		switch(user){
+			case 'A':{
+				newCoordinate.y = coordinate.y-hero.step;
+				break;
+			}
+			case 'B':{
+				newCoordinate.y = coordinate.y+hero.step;
+				break;
+			}
+		}
 		
 	}
-
 	public void Right(char user){
-		
+		switch(user){
+			case 'A':{
+				newCoordinate.y = coordinate.y+hero.step;
+				break;
+			}
+			case 'B':{
+				newCoordinate.y = coordinate.y-hero.step;
+				break;
+			}
+		}
 	}
 
 	public void ForwardLeft(){
@@ -61,7 +103,7 @@ public abstract class Hero{
 	}
 
 	public void updateCoordinate(char movement){
-		
+
 	}
 
 	public void killSelf(){

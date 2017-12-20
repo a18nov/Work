@@ -13,8 +13,8 @@ public class ChessBoard{
 	}
 
 	public static void predictMove(Hero hero,char movement){
-		hero.move(movement,hero.player);
-		if(isOutOfBoard(hero.coordinate)){
+		hero.move(hero.player,movement);
+		if(isOutOfBoard(hero.newCoordinate)){
 			System.out.println("Error : Move out of board!");
 		}
 		else if(isAllyPresent(hero.coordinate,hero.newCoordinate)) {

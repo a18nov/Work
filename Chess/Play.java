@@ -38,7 +38,9 @@ public class Play extends ChessBoard{
 	}
 
 	public static void moveHandler(char user,Hero hero,char direction){
-		predictMove(hero,user);
+		System.out.println("Inside moveHandler"+hero.name+","+user);
+		predictMove(hero,direction);
+		displayBoard();
 	}
 	
 

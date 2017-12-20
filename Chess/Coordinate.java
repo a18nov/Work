@@ -6,6 +6,10 @@ public class Coordinate{
 		this.x=x;
 		this.y=y;
 	}
+	public Coordinate(Coordinate coordinate){
+		this.x = coordinate.x;
+		this.y = coordinate.y;
+	}
 	public void updateX(int newValueX){
 		this.x=newValueX;
 	}
