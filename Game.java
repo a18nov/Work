@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 public class Game
 {
     static String board[][] = new String[5][5];
@@ -361,3 +361,4 @@ public class Game
         System.out.println("\nScore of A : "+scoreA+"\nScore of B : "+scoreB+"\n");
     }
 }
+//comment
